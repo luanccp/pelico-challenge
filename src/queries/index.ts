@@ -4,12 +4,15 @@ export const SEARCH_REPOSITORIES = `
       edges {
         node {
           ... on Repository {
+            databaseId
             name
             owner {
               login
+              avatarUrl
             }
             description
             url
+            createdAt
           }
         }
       }

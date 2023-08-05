@@ -3,32 +3,43 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Icon from "@mui/material/Icon";
-import debounce from 'lodash.debounce';
+import debounce from "lodash.debounce";
 
-import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
-import { useState } from "react";
+import {
+  ResultCard,
+  ResultCardContent,
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
+} from "./styles";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { SEARCH_REPOSITORIES } from "../../queries";
 import { GITHUB_PERSONAL_TOKEN } from "../../constants/Github";
+import { FavoriteContext } from "../../context/Favorite";
+import { Avatar, Button } from "@mui/material";
 
 interface Repository {
   node: {
+    databaseId: number;
     name: string;
     owner: {
       login: string;
+      avatarUrl: string;
     };
     description: string;
     url: string;
+    createdAt: string;
   };
 }
 
 export const SearchAppBar: React.FC = () => {
-  
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [repos, setRepos] = useState<Repository[]>([]);
+  const { onAddFavorite } = useContext(FavoriteContext);
 
-   // Define the debounced search function
-   const debouncedSearch = debounce(async (searchQuery: string) => {
+  // Define the debounced search function
+  const debouncedSearch = debounce(async (searchQuery: string) => {
     if (searchQuery) {
       const variables = {
         query: `topic:${searchQuery}`,
@@ -36,7 +47,7 @@ export const SearchAppBar: React.FC = () => {
       };
 
       const response = await axios.post(
-        'https://api.github.com/graphql',
+        "https://api.github.com/graphql",
         {
           query: SEARCH_REPOSITORIES,
           variables,
@@ -47,7 +58,6 @@ export const SearchAppBar: React.FC = () => {
           },
         }
       );
-
       setRepos(response.data.data.search.edges);
     } else {
       setRepos([]);
@@ -61,42 +71,66 @@ export const SearchAppBar: React.FC = () => {
     debouncedSearch(newQuery);
   };
 
- 
-  
   return (
-  <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="static">
-      <Toolbar>
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-        >
-          Pelico challenge
-        </Typography>
-        <Search>
-          <SearchIconWrapper>
-            <Icon>search</Icon>
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search a repository"
-            inputProps={{ "aria-label": "search" }}
-            value={query}
-            onChange={handleInputChange}
-          />
-        </Search>
-        
-      </Toolbar>
-    </AppBar>
-    <ul>
-        {repos.map((repo) => (
-          <li key={repo.node.url}>
-            <a href={repo.node.url}>{repo.node.name}</a> - {repo.node.owner.login}<br />
-            {repo.node.description}
-          </li>
-        ))}
-      </ul>
-  </Box>
-);
-}
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+          >
+            Pelico challenge
+          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <Icon>search</Icon>
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search a repository"
+              inputProps={{ "aria-label": "search" }}
+              value={query}
+              onChange={handleInputChange}
+            />
+          </Search>
+        </Toolbar>
+      </AppBar>
+
+      {repos.map((repo) => (
+        <ResultCard key={repo.node.url} square>
+          <ResultCardContent>
+            <Typography variant="h6" gutterBottom>
+              {repo.node.name}
+            </Typography>
+
+            <Typography variant="body1" gutterBottom>
+              {repo.node.description}
+            </Typography>
+
+            <div>
+              <Avatar
+                alt={`${repo.node.owner.login}'s avatar`}
+                src={repo.node.owner.avatarUrl}
+              />
+              <Typography variant="subtitle2" marginLeft={1}>
+                {repo.node.owner.login}
+              </Typography>
+            </div>
+          </ResultCardContent>
+          <Button
+            size="small"
+            onClick={() =>
+              onAddFavorite({
+                id: repo.node.databaseId,
+                name: repo.node.name,
+              })
+            }
+          >
+            Favorite
+          </Button>
+        </ResultCard>
+      ))}
+    </Box>
+  );
+};

@@ -1,5 +1,6 @@
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import { Paper } from "@mui/material";
 
 export const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -33,6 +34,25 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     width: "100%",
-
   },
 }));
+
+export const ResultCard = styled(Paper)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: 'space-between',
+  alignItems: 'center',
+}));
+
+export const ResultCardContent = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  padding: theme.spacing(1, 2, 1, 2),
+  "& div": {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+}));
+
