@@ -1,9 +1,9 @@
-import Button from "@mui/material/Button";
+import { SearchAppBar } from "./components/SearchAppBar";
 
 export function App() {
   return (
     <div>
-      <Button variant="contained">Hello World</Button>
+      <SearchAppBar />
     </div>
   );
 }

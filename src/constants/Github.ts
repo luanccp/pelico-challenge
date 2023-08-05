@@ -1,0 +1,1 @@
+export const GITHUB_PERSONAL_TOKEN ='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'
