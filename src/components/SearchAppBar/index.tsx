@@ -20,25 +20,14 @@ import { GITHUB_PERSONAL_TOKEN } from "../../constants/Github";
 import { FavoriteContext } from "../../context/Favorite";
 import { Avatar, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { ResponseRepository } from "../../models/Repository";
 
-interface Repository {
-  node: {
-    databaseId: number;
-    name: string;
-    owner: {
-      login: string;
-      avatarUrl: string;
-    };
-    description: string;
-    url: string;
-    createdAt: string;
-  };
-}
+
 
 export const SearchAppBar: React.FC = () => {
-  const nav = useNavigate()
+  const nav = useNavigate();
   const [query, setQuery] = useState("");
-  const [repos, setRepos] = useState<Repository[]>([]);
+  const [repos, setRepos] = useState<ResponseRepository[]>([]);
   const { onAddFavorite } = useContext(FavoriteContext);
 
   // Define the debounced search function
@@ -103,6 +92,7 @@ export const SearchAppBar: React.FC = () => {
               onChange={handleInputChange}
             />
           </Search>
+
           <FavoriteIconWrapper onClick={() => nav("/favorites")}>
             <Icon>star</Icon>
           </FavoriteIconWrapper>

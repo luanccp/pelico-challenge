@@ -1,14 +1,9 @@
 import { createContext, useCallback, useState } from "react";
-
-interface FavoriteRepo {
-  id: number;
-  name: string;
-  rating?: number;
-}
+import { Repository } from "../models/Repository";
 
 interface FavoriteContextProps {
-  favoriteList: FavoriteRepo[];
-  onAddFavorite: (repo: FavoriteRepo) => void;
+  favoriteList: Repository[];
+  onAddFavorite: (repo: Repository) => void;
   onRemoveFavorite: (id: number) => void;
 }
 
@@ -19,9 +14,9 @@ export const FavoriteContext = createContext<FavoriteContextProps>(
 export const FavoriteContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [favoriteList, setFavoriteList] = useState<FavoriteRepo[]>([]);
+  const [favoriteList, setFavoriteList] = useState<Repository[]>([]);
 
-  const onAddFavorite = useCallback((repo: FavoriteRepo) => {
+  const onAddFavorite = useCallback((repo: Repository) => {
     setFavoriteList((prev) => [...prev, repo]);
   }, []);
 
