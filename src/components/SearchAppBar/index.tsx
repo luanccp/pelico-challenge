@@ -6,6 +6,7 @@ import Icon from "@mui/material/Icon";
 import debounce from "lodash.debounce";
 
 import {
+  FavoriteIconWrapper,
   ResultCard,
   ResultCardContent,
   Search,
@@ -18,6 +19,7 @@ import { SEARCH_REPOSITORIES } from "../../queries";
 import { GITHUB_PERSONAL_TOKEN } from "../../constants/Github";
 import { FavoriteContext } from "../../context/Favorite";
 import { Avatar, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface Repository {
   node: {
@@ -34,6 +36,7 @@ interface Repository {
 }
 
 export const SearchAppBar: React.FC = () => {
+  const nav = useNavigate()
   const [query, setQuery] = useState("");
   const [repos, setRepos] = useState<Repository[]>([]);
   const { onAddFavorite } = useContext(FavoriteContext);
@@ -78,11 +81,17 @@ export const SearchAppBar: React.FC = () => {
           <Typography
             variant="h6"
             noWrap
+            onClick={() => nav("/")}
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", sm: "block" },
+              cursor: "pointer",
+            }}
           >
             Pelico challenge
           </Typography>
+
           <Search>
             <SearchIconWrapper>
               <Icon>search</Icon>
@@ -94,6 +103,9 @@ export const SearchAppBar: React.FC = () => {
               onChange={handleInputChange}
             />
           </Search>
+          <FavoriteIconWrapper onClick={() => nav("/favorites")}>
+            <Icon>star</Icon>
+          </FavoriteIconWrapper>
         </Toolbar>
       </AppBar>
 

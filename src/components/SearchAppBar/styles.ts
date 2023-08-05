@@ -17,6 +17,15 @@ export const Search = styled("div")(({ theme }) => ({
   },
 }));
 
+export const FavoriteIconWrapper = styled("a")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  cursor: "pointer",
+}));
+
 export const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
