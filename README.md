@@ -1,3 +1,18 @@
+Hey 👋🏼
+
+My name is Luan, this is the Pelico challenge solution.
+
+#### How to run the project?
+```shell
+npm i
+
+```
+then
+```shell
+npm run dev
+
+```
+
 ## Requirements
 - [x] Use either GraphQL (preferred) or REST API to query Github for repositories based on the
 user's search input.
@@ -11,6 +26,5 @@ users to rate their favorite repositories.
 - [x] Users should also be able to remove items from the favorites list.
 
 ### Extras
-- [ ] Publish the project
 - [x] Loading states
 - [x] Empty states
