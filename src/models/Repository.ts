@@ -15,5 +15,5 @@ export interface ResponseRepository {
   export interface Repository {
     id: number;
     name: string;
-    rating?: number;
+    rating: number;
   }

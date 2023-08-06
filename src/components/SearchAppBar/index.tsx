@@ -22,8 +22,6 @@ import { Avatar, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ResponseRepository } from "../../models/Repository";
 
-
-
 export const SearchAppBar: React.FC = () => {
   const nav = useNavigate();
   const [query, setQuery] = useState("");
@@ -126,6 +124,7 @@ export const SearchAppBar: React.FC = () => {
               onAddFavorite({
                 id: repo.node.databaseId,
                 name: repo.node.name,
+                rating: 0,
               })
             }
           >
