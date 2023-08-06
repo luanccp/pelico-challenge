@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { Repository } from "../models/Repository";
 
 interface FavoriteContextProps {
@@ -16,7 +16,19 @@ export const FavoriteContext = createContext<FavoriteContextProps>(
 export const FavoriteContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [favoriteList, setFavoriteList] = useState<Repository[]>([]);
+  const [favoriteList, setFavoriteList] = useState<Repository[]>(() => {
+    const storageRepositories = localStorage.getItem('@Pelico:favorites')
+
+    if (storageRepositories) {
+      return JSON.parse(storageRepositories);
+    }
+    return [];
+  });
+
+
+  useEffect(() => {
+    localStorage.setItem('@Pelico:favorites', JSON.stringify(favoriteList))
+  }, [favoriteList])
 
   const onAddFavorite = (repo: Repository) => {
     setFavoriteList((prev) => [...prev, repo]);
