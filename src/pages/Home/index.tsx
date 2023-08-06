@@ -13,7 +13,7 @@ import { RepositoryCard } from "../../components/RepositoryCard";
 export const Home: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [repos, setRepos] = useState<ResponseRepository[]>([]);
-  const { onAddFavorite } = useContext(FavoriteContext);
+  const { onAddFavorite, onFindFavorite } = useContext(FavoriteContext);
 
   // Define the debounced search function
   const debouncedSearch = debounce(async (searchQuery: string) => {
@@ -73,6 +73,7 @@ export const Home: React.FC = () => {
               name={repo.node.name}
               description={repo.node.description}
               owner={repo.node.owner}
+              isFavorite={!!onFindFavorite(repo.node.databaseId)}
               onPress={() =>
                 onAddFavorite({
                   id: repo.node.databaseId,

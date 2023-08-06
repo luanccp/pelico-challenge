@@ -8,7 +8,8 @@ interface Props {
     login: string;
     avatarUrl: string;
   };
-  onPress: () => void;
+  onPress?: () => void;
+  isFavorite: boolean;
 }
 
 export const RepositoryCard: React.FC<Props> = ({
@@ -16,6 +17,7 @@ export const RepositoryCard: React.FC<Props> = ({
   description,
   owner,
   onPress,
+  isFavorite,
 }) => {
   return (
     <Container square>
@@ -35,9 +37,11 @@ export const RepositoryCard: React.FC<Props> = ({
           </Typography>
         </div>
       </Content>
-      <Button size="small" onClick={onPress}>
-        Favorite
-      </Button>
+      {!isFavorite && (
+        <Button size="small" onClick={onPress}>
+          Favorite
+        </Button>
+      )}
     </Container>
   );
 };

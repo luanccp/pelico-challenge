@@ -6,6 +6,7 @@ interface FavoriteContextProps {
   onAddFavorite: (repo: Repository) => void;
   onRemoveFavorite: (id: number) => void;
   onRateFavorite: (id: number, value: number | null) => void;
+  onFindFavorite: (id: number) => Repository | undefined;
 }
 
 export const FavoriteContext = createContext<FavoriteContextProps>(
@@ -17,15 +18,15 @@ export const FavoriteContextProvider: React.FC<React.PropsWithChildren> = ({
 }) => {
   const [favoriteList, setFavoriteList] = useState<Repository[]>([]);
 
-  const onAddFavorite = useCallback((repo: Repository) => {
+  const onAddFavorite = (repo: Repository) => {
     setFavoriteList((prev) => [...prev, repo]);
-  }, []);
+  };
 
-  const onRemoveFavorite = useCallback((id: number) => {
+  const onRemoveFavorite = (id: number) => {
     setFavoriteList((prev) => prev.filter((r) => r.id !== id));
-  }, []);
+  };
 
-  const onRateFavorite = useCallback((id: number, value: number | null) => {
+  const onRateFavorite = (id: number, value: number | null) => {
     if (!value) return;
     setFavoriteList((prev) => {
       const findIndex = prev.findIndex((r) => r.id === id);
@@ -39,7 +40,14 @@ export const FavoriteContextProvider: React.FC<React.PropsWithChildren> = ({
       }
       return prev;
     });
-  }, []);
+  };
+
+  const onFindFavorite = useCallback(
+    (id: number) => {
+      return favoriteList.find((favorite) => favorite.id === id);
+    },
+    [favoriteList]
+  );
 
   return (
     <FavoriteContext.Provider
@@ -48,6 +56,7 @@ export const FavoriteContextProvider: React.FC<React.PropsWithChildren> = ({
         onAddFavorite,
         onRemoveFavorite,
         onRateFavorite,
+        onFindFavorite,
       }}
     >
       {children}
