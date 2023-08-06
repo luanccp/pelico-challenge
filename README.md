@@ -1,27 +1,16 @@
-# React + TypeScript + Vite
+## Requirements
+- [x] Use either GraphQL (preferred) or REST API to query Github for repositories based on the
+user's search input.
+- [x] Display the search results as the user types in the search field, possibly with debounce
+functionality to avoid excessive API calls.
+- [ ] Each search result item should have a button to set it as a favorite. If an item is already set as
+a favorite, it should be rendered as a favorite again.
+- [x] Implement a navigation feature to allow users to access the list of favorites.
+- [x] In the favorites list, each item should have a rating evaluation feature, from 1 to 5 , allowing
+users to rate their favorite repositories.
+- [x] Users should also be able to remove items from the favorites list.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Extras
+- [ ] Publish the project
+- [ ] Loading states
+- [ ] Empty states
