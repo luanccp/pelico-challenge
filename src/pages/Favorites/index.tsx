@@ -1,12 +1,10 @@
 import { useContext, useMemo } from "react";
 import { SearchAppBar } from "../../components/SearchAppBar";
 import { FavoriteContext } from "../../context/Favorite";
-import {
-  ResultCard,
-  ResultCardContent,
-} from "../../components/SearchAppBar/styles";
+
 import { Button, Rating, Typography } from "@mui/material";
-import { EmptyContainer } from "./styles";
+import { FavoriteCard, FavoriteCardContent } from "./styles";
+import { EmptyResults } from "../../components/EmptyResults";
 
 export const Favorites: React.FC = () => {
   const { favoriteList, onRemoveFavorite, onRateFavorite } =
@@ -15,17 +13,15 @@ export const Favorites: React.FC = () => {
   const updatedList = useMemo(() => {
     if (!favoriteList.length) {
       return (
-        <EmptyContainer>
-          <Typography variant="h6">No favorites here.</Typography>
-          <Typography variant="body1">
-            Please go back at home and fav any repo you like :)
-          </Typography>
-        </EmptyContainer>
+        <EmptyResults
+          title="No favorites here."
+          description=" Please go back at home and fav any repo you like :)"
+        />
       );
     }
     return favoriteList.map((repo) => (
-      <ResultCard key={repo.id} square>
-        <ResultCardContent>
+      <FavoriteCard key={repo.id} square>
+        <FavoriteCardContent>
           <Typography variant="h6" gutterBottom>
             {repo.name}
           </Typography>
@@ -34,11 +30,11 @@ export const Favorites: React.FC = () => {
             value={repo.rating}
             onChange={(_, newValue) => onRateFavorite(repo.id, newValue)}
           />
-        </ResultCardContent>
+        </FavoriteCardContent>
         <Button size="small" onClick={() => onRemoveFavorite(repo.id)}>
           Remove Favorite
         </Button>
-      </ResultCard>
+      </FavoriteCard>
     ));
   }, [favoriteList, onRateFavorite, onRemoveFavorite]);
 
